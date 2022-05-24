@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Menü</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .mainpage {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 32px;
+        }
+
+        .brds {
+            border-radius: 10%;
+        }
+    </style>
+</head>
+<body>
+    <div class="mainpage">
+        <h1>
+            <strong><u>BINA LISTESI:</u></strong>
+        </h1>
+        <ul class = "listofbuildings">
+            <li>
+                <div class="card brds" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">Bina No:1</h5>
+                      <p class="card-text">"Aydın Teknoloji Şenliği 8. Stant" Binası</p>
+                      <a href="/bina" class="btn btn-primary">Bina sayfasına git!</a>
+		      <p class="card-text building" style="color: green;">Yapı durumu: Yıkılmadı.</p>        
+               </div>      
+            </li>
+            <li>
+                <div class="card brds" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">Bina No:2</h5>
+                      <p class="card-text">"Nazilli Fen Lisesi" Binası</p>
+		      <p class="card-text" style="color: grey;">Yapı durumu: Sensör aktif değil.</p>
+                    <a href="/bina" >
+                        <button style="cursor: not-allowed;" class = "btn btn-primary" disabled>
+                            Bina sayfasına git!
+                        </button>
+                    </a>
+                </div>
+                </div>
+            </li>
+        </ul>
+		<a href="/binaEkle" id="addBtn">
+            <button style = "text-align: center; font-size: 20px;" href = "/binaEkle" class = "btn btn-success">+</button>
+        </a>
+        <a href="/harita">
+            <button type="button" class = "btn btn-success">
+                <i class="fa-solid fa-map-location-dot"></i>
+            </button>
+        </a>
+      
+    </div>
+<script>
+let buildingStatLabel = document.querySelector('.building');
+setInterval(function () {
+    let xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let buildingStatus = this.responseText;
+            if (buildingStatus != "Yıkılmadı")
+            {
+                buildingStatLabel.style.color = "red";
+                buildingStatLabel.textContent = "Yapı durumu: Yıkıldı.";
+            }
+        }
+      };
+      xhttp.open("GET", "/controlBuildingStatus", true);
+      xhttp.send();
+    }, 1000);
+
+</script>
+</body>
+</html>
